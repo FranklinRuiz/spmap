@@ -120,6 +120,10 @@ col.col-day   { width: 48px; min-width: 42px; }
     pointer-events: auto; cursor: default;
     box-shadow: 0 1px 2px rgba(0,0,0,0.12);
 }
+.bar-seg.draggable { cursor: grab; }
+.bar-seg.draggable:hover { box-shadow: 0 3px 10px rgba(0,0,0,0.22); }
+.bar-seg.bar-dragging { cursor: grabbing; box-shadow: 0 6px 20px rgba(0,0,0,0.28) !important; opacity: 0.92 !important; z-index: 10; transition: none; }
+.bar-seg.bar-moved { outline: 2px dashed rgba(255,255,255,0.55); outline-offset: -2px; }
 .bar-seg:hover  { box-shadow: 0 2px 6px rgba(0,0,0,0.18); }
 .bar-seg.dimmed { opacity: 0.15; }
 .bar-seg-label  {
@@ -129,6 +133,14 @@ col.col-day   { width: 48px; min-width: 42px; }
     font-family: 'JetBrains Mono', monospace;
     text-shadow: 0 1px 2px rgba(0,0,0,0.2);
 }
+.bar-drag-icon {
+    margin-left: auto; padding-right: 6px;
+    font-size: 11px; color: rgba(255,255,255,0.6);
+    pointer-events: none; flex-shrink: 0;
+    opacity: 0; transition: opacity 0.15s;
+}
+.bar-seg.draggable:hover .bar-drag-icon,
+.bar-seg.bar-dragging .bar-drag-icon { opacity: 1; }
 
 /* Footer */
 .gantt-footer {
@@ -159,3 +171,35 @@ col.col-day   { width: 48px; min-width: 42px; }
     border: 1px solid #cbd5e1;
 }
 .lk-holiday  { background: #fecdd3; border: 1px solid #fb7185; }
+.lk-drag-hint { font-size: 13px; color: #94a3b8; line-height: 1; }
+
+.stats-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; margin-left: auto; }
+
+.reset-btn {
+    display: flex; align-items: center; gap: 5px;
+    font-size: 11px; font-weight: 600; color: #2563eb;
+    background: #eff6ff; border: 1px solid #bfdbfe;
+    border-radius: 20px; padding: 4px 12px;
+    cursor: pointer; transition: all 0.15s; flex-shrink: 0;
+}
+.reset-btn:hover { background: #dbeafe; border-color: #93c5fd; }
+
+.export-btn {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 11px; font-weight: 600; color: #ffffff;
+    background: #2563eb; border: 1px solid #1d4ed8;
+    border-radius: 20px; padding: 5px 14px;
+    cursor: pointer; transition: all 0.15s; flex-shrink: 0;
+    box-shadow: 0 1px 3px rgba(37,99,235,0.25);
+}
+.export-btn:hover:not(:disabled) { background: #1d4ed8; box-shadow: 0 2px 6px rgba(37,99,235,0.35); }
+.export-btn:disabled { opacity: 0.7; cursor: not-allowed; }
+.export-btn.exporting { background: #3b82f6; }
+
+@keyframes spin { to { transform: rotate(360deg); } }
+.export-spinner {
+    display: inline-block; width: 11px; height: 11px;
+    border: 2px solid rgba(255,255,255,0.35);
+    border-top-color: #ffffff; border-radius: 50%;
+    animation: spin 0.7s linear infinite; flex-shrink: 0;
+}
